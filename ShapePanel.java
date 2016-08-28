@@ -2,12 +2,13 @@
   * @author Patrick Skinner
   * */
 
-package EvolutionGame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.*;
 
 /** This is a horrific class that will be replaced by a nicer non-JPanel UI at a later date, or maybe it already has and
   * this is just here for legacy reasons, who knows, I'll probably for to update this comment when I do replace this class.
@@ -32,6 +33,8 @@ public class ShapePanel extends JPanel
   private javax.swing.Timer timer;
   private JButton start;
   private JButton stop;
+  
+  private static BufferedImage[] imgArray;
   
   public ShapePanel()
   {
@@ -84,6 +87,16 @@ public class ShapePanel extends JPanel
   
   public static void main(String[]args)
   {
+    imgArray = new BufferedImage[4];
+    try {
+      imgArray[0] = ImageIO.read(new File("Creature.png"));
+      imgArray[1] = ImageIO.read(new File("Monster.png"));
+      imgArray[2] = ImageIO.read(new File("Apple.png"));
+      imgArray[3] = ImageIO.read(new File("Mushroom.png"));
+    } catch (IOException e) {
+      System.out.println(e.toString());
+    }
+    
     JFrame shapeFrame = new JFrame();
     shapeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     shapeFrame.getContentPane().add(new ShapePanel());
@@ -283,7 +296,7 @@ public class ShapePanel extends JPanel
     public DrawingPanel()
     {
       setPreferredSize( new Dimension(Evo.grid_size*8,Evo.grid_size*8) );
-      setBackground (Color.gray); 
+      setBackground(new Color(80, 170, 56)); 
     }
     
     public void paintComponent(Graphics g)
@@ -291,7 +304,7 @@ public class ShapePanel extends JPanel
       super.paintComponent(g);
       for (Shape s : drawObjects)
       {
-        s.draw(g);
+        s.draw(g, imgArray);
       }
     }
   }

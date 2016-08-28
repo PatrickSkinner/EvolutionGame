@@ -2,8 +2,6 @@
   * @author Patrick Skinner
   * */
 
-package EvolutionGame;
-
 import java.util.*;
 
 public class Evo{
